@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Air Pollution Detector</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    #pollution-result {
+      font-size: 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Air Pollution Detector</h1>
+  <p>Click the button to check air pollution in your area.</p>
+  <button id="checkButton">Check Air Pollution</button>
+  <div id="pollution-result"></div>
+
+  <script>
+    document.getElementById('checkButton').addEventListener('click', function() {
+      getLocation();
+    });
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+      } else { 
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+
+    function showPosition(position) {
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
+      var airQuality = getAirQuality(latitude, longitude); // Dummy function, you need to replace this with actual API call
+      
+      document.getElementById('pollution-result').innerHTML = "Air pollution at your location: " + airQuality;
+    }
+
+    function showError(error) {
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          alert("User denied the request for Geolocation.");
+          break;
+        case error.POSITION_UNAVAILABLE:
+          alert("Location information is unavailable.");
+          break;
+        case error.TIMEOUT:
+          alert("The request to get user location timed out.");
+          break;
+        case error.UNKNOWN_ERROR:
+          alert("An unknown error occurred.");
+          break;
+      }
+    }
+
+    function getAirQuality(latitude, longitude) {
+      // This function should make a request to an API to get air quality data
+      // Replace this with an actual API call to get air quality information
+      // For the sake of example, let's return a dummy value
+      var dummyData = Math.random() * 100; // Dummy value between 0 and 100
+      return dummyData.toFixed(2); // Return value rounded to 2 decimal places
+    }
+  </script>
+</body>
+</html>
